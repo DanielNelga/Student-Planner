@@ -1,0 +1,20 @@
+ion-card {
+  background: #f3f6ff;
+}
+
+ion-card-content p {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+ion-card-content p:nth-child(1) {
+  color: #2563eb;
+}
+
+ion-card-content p:nth-child(2) {
+  color: #059669;
+}
+
+ion-card-content p:nth-child(3) {
+  color: #dc2626;
+}

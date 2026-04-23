@@ -1,0 +1,121 @@
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Add Assignment</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-input label="Title" labelPlacement="stacked" [(ngModel)]="title"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Module" labelPlacement="stacked" [(ngModel)]="module"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-input label="Due Date" labelPlacement="stacked" type="date" [(ngModel)]="dueDate"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-select label="Priority" labelPlacement="stacked" [(ngModel)]="priority">
+          <ion-select-option value="Low">Low</ion-select-option>
+          <ion-select-option value="Medium">Medium</ion-select-option>
+          <ion-select-option value="High">High</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-textarea label="Notes" labelPlacement="stacked" [(ngModel)]="notes"></ion-textarea>
+      </ion-item>
+
+      <ion-button expand="block" class="ion-margin-top" (click)="addAssignment()">
+        Add Assignment
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Filter Assignments</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-select label="Priority Filter" labelPlacement="stacked" [(ngModel)]="selectedPriority">
+          <ion-select-option value="All">All</ion-select-option>
+          <ion-select-option value="Low">Low</ion-select-option>
+          <ion-select-option value="Medium">Medium</ion-select-option>
+          <ion-select-option value="High">High</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    <ion-card *ngFor="let assignment of getFilteredAssignments()" [ngClass]="{
+        'assignment-low': assignment.priority == 'Low',
+        'assignment-medium': assignment.priority == 'Medium',
+        'assignment-high': assignment.priority == 'High'
+      }">
+
+      <ion-card-header>
+        <ion-card-title>{{ assignment.title }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Module: {{ assignment.module }}</p>
+        <p>Due Date: {{ assignment.dueDate }}</p>
+
+        <p>
+          Priority:
+          <span [ngClass]="{
+              'priority-low': assignment.priority == 'Low',
+              'priority-medium': assignment.priority == 'Medium',
+              'priority-high': assignment.priority == 'High'
+            }">
+            {{ assignment.priority }}
+          </span>
+        </p>
+
+        <p>
+          Status:
+          <span [ngClass]="{
+              'status-complete': assignment.isCompleted,
+              'status-pending': !assignment.isCompleted
+            }">
+            {{ assignment.isCompleted ? 'Completed' : 'Pending' }}
+          </span>
+        </p>
+
+        <p>
+          Due Status:
+          <span [ngClass]="{
+              'due-overdue': getDueStatus(assignment.dueDate) == 'Overdue',
+              'due-today': getDueStatus(assignment.dueDate) == 'Due Today',
+              'due-soon': getDueStatus(assignment.dueDate) == 'Due Soon',
+              'due-upcoming': getDueStatus(assignment.dueDate) == 'Upcoming'
+            }">
+            {{ getDueStatus(assignment.dueDate) }}
+          </span>
+        </p>
+
+        <p>Notes: {{ assignment.notes }}</p>
+
+        <ion-item lines="none">
+          <ion-checkbox [checked]="assignment.isCompleted" (ionChange)="toggleAssignment(assignment.id)">
+          </ion-checkbox>
+          <ion-label class="ion-margin-start">Completed</ion-label>
+        </ion-item>
+
+        <ion-button expand="block" [routerLink]="['/assignments', assignment.id]">
+          View Details
+        </ion-button>
+
+        <ion-button expand="block" color="danger" class="ion-margin-top" (click)="deleteAssignment(assignment.id)">
+          Delete
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+</ion-content>

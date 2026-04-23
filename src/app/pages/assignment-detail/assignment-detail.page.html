@@ -1,0 +1,21 @@
+<ion-content class="ion-padding">
+  <ion-card *ngIf="assignment">
+    <ion-card-header>
+      <ion-card-title>{{ assignment.title }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Module: {{ assignment.module }}</p>
+      <p>Due Date: {{ assignment.dueDate }}</p>
+      <p>Priority: {{ assignment.priority }}</p>
+      <p>Notes: {{ assignment.notes }}</p>
+      <p>Status: {{ assignment.isCompleted ? 'Completed' : 'Pending' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!assignment">
+    <ion-card-content>
+      <p>Assignment not found.</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

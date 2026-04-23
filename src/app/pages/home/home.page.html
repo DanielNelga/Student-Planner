@@ -1,0 +1,28 @@
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Welcome</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>Welcome to Student Focus Hub.</p>
+      <p>Total Assignments: {{ totalAssignments }}</p>
+      <p>Completed Assignments: {{ completedAssignments }}</p>
+
+      <ion-button expand="block" routerLink="/assignments">
+        Go to Assignments
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Quote of the Day</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p>{{ quote }}</p>
+      <p *ngIf="author">- {{ author }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
